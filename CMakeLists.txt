@@ -22,6 +22,9 @@ add_executable(${PROJECT_NAME}
         src/opengl/Texture.h
         src/applications/TriangleApp.cpp
         src/applications/TriangleApp.h
+        src/applications/CubeApp.cpp
+        src/applications/CubeApp.h
+
         )
 
 # ==== for downloading submodules automatically ====
@@ -53,10 +56,10 @@ add_subdirectory(external/glad)
 add_subdirectory(external/glfw)
 add_subdirectory(external/glm)
 add_subdirectory(external/stb_image)
-add_subdirectory(external/cgltf)
+add_subdirectory(external/assimp)
 
 target_link_libraries(${PROJECT_NAME}
-        PRIVATE glad glfw glm stb_image cgltf)
+        PRIVATE glad glfw glm stb_image assimp)
 
 # Apparently you dont need these?
 #target_include_directories(${PROJECT_NAME}

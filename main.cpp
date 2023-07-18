@@ -1,8 +1,8 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
 #include "src/applications/TriangleApp.h"
+#include <memory>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -15,6 +15,10 @@ float deltaTime = 0.f;
 float lastFrame = 0.0f;
 
 int main() {
+    auto objInt = 5;
+    auto ptrInt = std::make_unique<int>(5);
+
+    std::cout << sizeof(objInt) << " " << sizeof(ptrInt) << "\n";
 
     // glfw: initialize and configure
     glfwInit();
@@ -44,7 +48,7 @@ int main() {
     glEnable(GL_DEPTH_TEST);
 
     // Initialize application
-    auto* app = (Application*) new TriangleApp;
+    auto app = std::make_unique<TriangleApp>();
     app->Initialize();
 
     // render loop

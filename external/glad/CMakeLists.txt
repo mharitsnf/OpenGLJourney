@@ -1,3 +1,5 @@
+# Follow this template for libraries such as glad or cgltf.
+# Put the header files inside include and put C/C++ files inside src.
 cmake_minimum_required(VERSION 3.25)
 project(Glad)
 

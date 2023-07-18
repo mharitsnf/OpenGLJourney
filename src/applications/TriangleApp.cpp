@@ -12,14 +12,14 @@ void TriangleApp::Initialize() {
     using namespace glm;
 
     mRotation = 0;
-    mShader = new Shader("../shaders/static.vert", "../shaders/lit.frag");
-    mDisplayTexture = new Texture("../assets/textures/wall.jpg");
+    mShader = std::make_unique<Shader>("../shaders/static.vert", "../shaders/lit.frag");
+    mDisplayTexture = std::make_unique<Texture>("../assets/textures/wall.jpg");
 
-    mVertexArray = new VertexArray;
-    mVertexPositions = new Attribute<vec3>;
-    mVertexNormals = new Attribute<vec3>;
-    mVertexTexCoords = new Attribute<vec2>;
-    mIndexBuffer = new IndexBuffer;
+    mVertexArray = std::make_unique<VertexArray>();
+    mVertexPositions = std::make_unique<Attribute<vec3>>();
+    mVertexNormals = std::make_unique<Attribute<vec3>>();
+    mVertexTexCoords = std::make_unique<Attribute<vec2>>();
+    mIndexBuffer = std::make_unique<IndexBuffer>();
 
     // Vertex positions
     std::vector<vec3> positions;
@@ -82,9 +82,11 @@ void TriangleApp::Update(float inDeltaTime) {
 void TriangleApp::Render(float inAspectRatio) {
     using namespace glm;
 
-    mat4 projection = perspective(60.0f, inAspectRatio, .01f, 1000.f);
-    mat4 view = lookAt(vec3(0,0,1.f), vec3(0,0,0), vec3(0,1,0));
-    mat4 model = glm::toMat4(angleAxis(mRotation * DEG2RAD, vec3(0, 0, 1)));
+    mat4 projection = perspective(50.0f, inAspectRatio, .01f, 1000.f);
+    mat4 view = lookAt(vec3(0,0,-10.f), vec3(0,0,0), vec3(0,1,0));
+
+    // Left to right order, e.g., float result = ((a * b) * c) * d;
+    mat4 model = mat4(1.0f) * glm::toMat4(angleAxis(radians(-60.f), vec3(1, 0, 0))) * glm::toMat4(angleAxis(radians(mRotation), vec3(0, 0, 1)));
 
     mShader->Bind();
 
@@ -99,14 +101,4 @@ void TriangleApp::Render(float inAspectRatio) {
 
     mDisplayTexture->UnSet(0);
     mShader->UnBind();
-}
-
-void TriangleApp::Shutdown() {
-    delete mShader;
-    delete mDisplayTexture;
-    delete mVertexPositions;
-    delete mVertexNormals;
-    delete mVertexTexCoords;
-    delete mIndexBuffer;
-    delete mVertexArray;
 }

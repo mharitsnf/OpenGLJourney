@@ -16,8 +16,7 @@ out vec3 fragPos;
 out vec2 uv;
 
 void main() {
-    // Remember that OpenGL operations works right to left,
-    // meaning calculating MVP matrix works from projection -> view -> model
+    // Left to right order, e.g., float result = ((a * b) * c) * d;
     gl_Position = projection * view * model * vec4(position, 1.0);
 
     fragPos = vec3(model * vec4(position, 1.0));
